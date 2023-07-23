@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_hexa_str.c                                      :+:      :+:    :+:   */
+/*   ft_print_hexa.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 02:01:35 by lperez-h          #+#    #+#             */
-/*   Updated: 2023/07/22 23:37:31 by lperez-h         ###   ########.fr       */
+/*   Updated: 2023/07/23 23:03:12 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-static int	ft_hex_len(unsigned int n)
+int	ft_hex_len(unsigned int n)
 {
 	int	count;
 

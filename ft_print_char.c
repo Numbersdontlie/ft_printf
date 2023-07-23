@@ -1,30 +1,56 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_unsigned.c                                :+:      :+:    :+:   */
+/*   ft_print_char.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/22 01:46:10 by lperez-h          #+#    #+#             */
-/*   Updated: 2023/07/23 23:02:55 by lperez-h         ###   ########.fr       */
+/*   Created: 2023/07/23 15:37:17 by lperez-h          #+#    #+#             */
+/*   Updated: 2023/07/23 23:03:18 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-int	ft_print_unsigned(unsigned int n)
+int	ft_putchar(char c)
 {
-	static int		j;
-	unsigned int	i;
+	write(1, &c, 1);
+	return (1);
+}
 
-	i = n;
-	if (!j)
-		j = 0;
-	if (i > 9)
-		ft_print_unsigned(i / 10);
-	ft_putchar_fd((i % 10) + '0', 1);
-	j++;
-	if (n == 0)
-		return (1);
-	return (j);
+int	ft_putchar_fd(char c, int fd)
+{
+	write(fd, &c, 1);
+	return (1);
+}
+
+int	ft_putstr(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		write(1, &str[i], 1);
+		i++;
+	}
+	return (i);
+}
+
+int	ft_printstr(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str == NULL)
+	{
+		ft_putstr("(null)");
+		return (6);
+	}
+	while (str[i])
+	{
+		write(1, &str[i], 1);
+		i++;
+	}
+	return (i);
 }

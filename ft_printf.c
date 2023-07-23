@@ -6,13 +6,13 @@
 /*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 00:23:52 by lperez-h          #+#    #+#             */
-/*   Updated: 2023/07/23 02:49:02 by lperez-h         ###   ########.fr       */
+/*   Updated: 2023/07/23 23:02:42 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-int	ft_formatos(va_list args, const char format)
+int	ft_formatos(const char format, va_list args)
 {
 	int	i;
 

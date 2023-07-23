@@ -6,45 +6,96 @@
 /*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 14:21:20 by lperez-h          #+#    #+#             */
-/*   Updated: 2023/07/23 02:56:38 by lperez-h         ###   ########.fr       */
+/*   Updated: 2023/07/23 23:02:49 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include	"libftprintf.h"
-#include	<unistd.h>
+#include "libftprintf.h"
 
-int	ft_putchar(char c)
+int	ft_size(int n)
 {
-	write(1, &c, 1);
-	return (1);
-}
-
-int	ft_printstr(char *str)
-{
-	int	i;
+	int		i;
 
 	i = 0;
-	if (str == NULL)
+	if (n <= 0)
+		i = 1;
+	while (n)
 	{
-		ft_putstr("(null)");
-		return (6);
-	}
-	while (str[i])
-	{
-		write(1, &str[i], 1);
+		n /= 10;
 		i++;
 	}
 	return (i);
 }
 
-int	ft_printnbr(int n)
+char	*ft_itoa(int n)
 {
+	char	*str;
 	int		len;
-	char	*num;
 
-	len = 0;
-	num = ft_itoa(n);
-	len = ft_printstr(num);
-	free(num);
-	return (len);
+	len = ft_size(n);
+	str = ft_calloc((len + 1), sizeof(char));
+	if (!str)
+		return (NULL);
+	if (n == 0)
+		str[0] = '0';
+	if (n < 0)
+	{
+		str[0] = '-';
+		if (n == INT_MIN)
+		{
+			str[--len] = '8';
+			n /= 10;
+		}
+		n = -n;
+	}
+	while (len-- && n != 0)
+	{
+		str[len] = (n % 10) + '0';
+		n /= 10;
+	}
+	return (str);
+}
+
+void	ft_bzero(void *s, size_t n)
+{
+	unsigned char	*ptr;
+	size_t			i;
+
+	i = 0;
+	ptr = (unsigned char *)s;
+	while (i < n)
+	{
+		*ptr++ = '\0';
+		i++;
+	}
+}
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	void	*memory;
+
+	memory = (void *)malloc(nmemb * size);
+	if (memory == NULL)
+		return (0);
+	ft_bzero(memory, (nmemb * size));
+	return (memory);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	char	*result;
+
+	result = NULL;
+	while (*s)
+	{
+		if (*s == (unsigned char)c)
+		{
+			result = ((char *)s);
+			return (result);
+		}
+		s++;
+	}
+	if ((*s == '\0') && ((char)c == '\0'))
+		return ((char *)s);
+	return (0);
 }

@@ -1,6 +1,6 @@
 NAME = libftprintf.a
 
-SRCS = ft_print_hexa.c ft_print_ptr.c ft_print_unsigned.c ft_printf_utils.c ft_printf.c
+SRCS = ft_print_char.c ft_print_hexa.c ft_print_nbr.c ft_print_ptr.c ft_print_unsigned.c ft_printf_utils.c ft_printf.c
 
 OBJS = ${SRCS:.c=.o}
 
@@ -9,9 +9,7 @@ FLAGS = -Wall -Wextra -Werror
 all: ${NAME}
 
 ${NAME}: ${OBJS}
-	#make all -C ./libft#
-	# cp ../Libft/libft.a libftprintf.a#
-	ar rcs ${NAME} ${OBJS} libftprintf.h 
+	ar -rcs ${NAME} ${OBJS} libftprintf.h
 
 %.o: %.c
 	cc $(FLAGS) -c $< -o $@
