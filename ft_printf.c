@@ -6,52 +6,55 @@
 /*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 00:23:52 by lperez-h          #+#    #+#             */
-/*   Updated: 2023/07/23 23:02:42 by lperez-h         ###   ########.fr       */
+/*   Updated: 2023/07/30 02:46:09 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
-int	ft_formatos(const char format, va_list args)
+void	ft_formatos(char s, va_list *args, int *len)
 {
-	int	i;
-
-	i = 0;
-	if (format == '%')
-		i = ft_putchar('%');
-	else if (format == 'c')
-		i = ft_putchar(va_arg(args, int));
-	else if (format == 's')
-		i = ft_printstr(va_arg(args, char *));
-	else if (format == 'p')
-		i = ft_print_ptr(va_arg(args, unsigned long long));
-	else if (format == 'd' || format == 'i')
-		i = ft_printnbr(va_arg(args, int));
-	else if (format == 'u')
-		i = ft_print_unsigned(va_arg(args, unsigned int));
-	else if (format == 'x' || format == 'X')
-		i = ft_print_hexa(va_arg(args, unsigned int), format);
-	return (i);
+	if (s == '%')
+		ft_putchar('%', len);
+	else if (s == 'c')
+		ft_putchar(va_arg(*args, int), len);
+	else if (s == 's')
+		ft_printstr(va_arg(*args, char *), len);
+	else if (s == 'p')
+		ft_print_ptr(va_arg(*args, size_t), len);
+	else if (s == 'd' || s == 'i')
+		ft_printnbr(va_arg(*args, int), len);
+	else if (s == 'u')
+		ft_print_unsigned(va_arg(*args, unsigned int), len);
+	else if (s == 'x')
+		ft_print_hex(va_arg(*args, unsigned int), len, 'x');
+	else if (s == 'X')
+		ft_print_hex(va_arg(*args, unsigned int), len, 'X');
 }
 
-int	ft_printf(const char *format, ...)
+int	ft_printf(const char *string, ...)
 {
-	va_list	argo;
+	va_list	args;
 	int		i;
+	int		length;
 
-	va_start(argo, format);
 	i = 0;
-	while (*format)
+	length = 0;
+	va_start(args, string);
+	while (string[i] != '\0')
 	{
-		if (*format == '%' && ft_strchr("cspdiuxX%", *(format + 1)))
+		if (string[i] == '%')
 		{
-			i += ft_formatos(*(format + 1), argo);
-			format++;
+			i++;
+			ft_formatos(string[i], &args, &length);
+			i++;
 		}
 		else
-			i += ft_putchar(*format);
-		format++;
+		{
+			ft_putchar((char)string[i], &length);
+			i++;
+		}
 	}
-	va_end(argo);
-	return (i);
+	va_end(args);
+	return (length);
 }

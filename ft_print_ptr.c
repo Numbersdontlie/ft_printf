@@ -6,53 +6,35 @@
 /*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 23:42:53 by lperez-h          #+#    #+#             */
-/*   Updated: 2023/07/23 23:03:00 by lperez-h         ###   ########.fr       */
+/*   Updated: 2023/07/30 02:37:45 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
-int	ft_ptr_len(unsigned int num)
+void	ft_print_ptr(size_t ptr, int *length)
 {
-	int	len;
+	char	str[25];
+	int		i;
+	char	*base;
 
-	len = 0;
-	while (num != 0)
-	{
-		len++;
-		num = num / 16;
-	}
-	return (len);
-}
-
-void	ft_put_ptr(unsigned int num)
-{
-	if (num >= 16)
-	{
-		ft_put_ptr(num / 16);
-		ft_put_ptr(num % 16);
-	}
-	else
-	{
-		if (num <= 9)
-			ft_putchar_fd((num + '0'), 1);
-		else
-			ft_putchar_fd((num - 10 + 'A'), 1);
-	}
-}
-
-int	ft_print_ptr(unsigned long long ptr)
-{
-	int	len;
-
-	len = 0;
-	len += write(1, "0x", 2);
+	base = "0123456789abcdef";
+	i = 0;
+	write(1, "0x", 2);
+	*length += 2;
 	if (ptr == 0)
-		len += write(1, "0", 1);
-	else
 	{
-		ft_put_ptr(ptr);
-		len += ft_ptr_len(ptr);
+		ft_putchar('0', length);
+		return ;
 	}
-	return (len);
+	while (ptr != 0)
+	{
+		str[i] = base[ptr % 16];
+		ptr = ptr / 16;
+		i++;
+	}
+	while (i--)
+	{
+		ft_putchar(str[i], length);
+	}
 }

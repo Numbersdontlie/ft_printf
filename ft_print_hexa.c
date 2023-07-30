@@ -6,51 +6,34 @@
 /*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 02:01:35 by lperez-h          #+#    #+#             */
-/*   Updated: 2023/07/23 23:03:12 by lperez-h         ###   ########.fr       */
+/*   Updated: 2023/07/30 02:28:18 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
-int	ft_hex_len(unsigned int n)
+void	ft_print_hex(unsigned int n, int *length, char x_or_x)
 {
-	int	count;
+	char	str[25];
+	char	*base;
+	int		i;
 
-	count = 0;
+	if (x_or_x == 'X')
+		base = "0123456789ABCDEF";
+	else
+		base = "0123456789abcdef";
+	i = 0;
+	if (n == 0)
+	{
+		ft_putchar('0', length);
+		return ;
+	}
 	while (n != 0)
 	{
-		count++;
+		str[i] = base[n % 16];
 		n = n / 16;
+		i++;
 	}
-	return (count);
-}
-
-void	ft_put_hex(unsigned int num, const char format)
-{
-	if (num >= 16)
-	{
-		ft_put_hex(num / 16, format);
-		ft_put_hex(num % 16, format);
-	}
-	else
-	{
-		if (num <= 9)
-			ft_putchar_fd((num + '0'), 1);
-		else
-		{
-			if (format == 'x')
-				ft_putchar_fd((num + '0'), 1);
-			if (format == 'X')
-				ft_putchar_fd((num - 10 + 'A'), 1);
-		}
-	}
-}
-
-int	ft_print_hexa(unsigned int num, const char format)
-{
-	if (num == 0)
-		return (write(1, "0", 1));
-	else
-		ft_put_hex(num, format);
-	return (ft_hex_len(num));
+	while (i--)
+		ft_putchar(str[i], length);
 }

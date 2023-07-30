@@ -6,20 +6,29 @@
 /*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 15:40:10 by lperez-h          #+#    #+#             */
-/*   Updated: 2023/07/23 23:03:08 by lperez-h         ###   ########.fr       */
+/*   Updated: 2023/07/30 02:37:11 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
-int	ft_printnbr(int n)
+void	ft_printnbr(int n, int *length)
 {
-	int		len;
-	char	*num;
-
-	len = 0;
-	num = ft_itoa(n);
-	len = ft_printstr(num);
-	free(num);
-	return (len);
+	if (n == -2147483648)
+	{
+		write(1, "-2147483648", 11);
+		(*length) += 11;
+		return ;
+	}
+	if (n < 0)
+	{
+		ft_putchar('-', length);
+		ft_printnbr(n * -1, length);
+	}
+	else
+	{
+		if (n > 9)
+			ft_printnbr(n / 10, length);
+		ft_putchar(n % 10 + '0', length);
+	}
 }
