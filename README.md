@@ -28,4 +28,4 @@ The different type of variables are printed using a function for each of the for
 
 ## Workflow 
 
-![image.png](attachment:77a1c169-664a-4584-9206-4cd88ba68101:image.png)
+![alt text](printf.png)
